@@ -2,7 +2,9 @@
 A ReactJS dashboard that receives its data via a web socket.
 
 I was wondering what a client server react app backed by nodejs would look like so I started this project and I called 
-it treadstone.
+it Treadstone.
+
+Head over to the [Live Demo](http://treadstone.jonlailam.net) to see it in action.
 
 ## Getting Started
 
@@ -14,6 +16,12 @@ gulp
 browse to http://localhost:3000
 ```
 
-## A word about the theme
+## Creating a bundle.tar.gz
+```
+gulp bundle
+```
 
-This theme is not free I did buy it so if you use it buy it **don't be a doosh bag!** [click here](https://wrapbootstrap.com/theme/superadmin-responsive-admin-frontend-WB02N9M12)
+## Give credit where credit is due
+
+- **A word about the theme** - Thanks to Rushan for the theme. This theme is not free so if you use it buy it [click here](https://wrapbootstrap.com/theme/superadmin-responsive-admin-frontend-WB02N9M12) 
+- **ract-app-boilerplate** - from Christian Alfoni you can find it on [github](https://github.com/christianalfoni/react-app-boilerplate) Christian also has a great [blog](http://www.christianalfoni.com) that is worth checking out.

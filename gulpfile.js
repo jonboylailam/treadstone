@@ -1,4 +1,6 @@
 var gulp = require('gulp'),
+    tar = require('gulp-tar'),
+    gzip = require('gulp-gzip'),
     server = require('gulp-develop-server'),
     livereload = require('gulp-livereload'),
     source = require('vinyl-source-stream'), // Used to stream bundle for further handling
@@ -165,30 +167,27 @@ gulp.task('default', ['client:init'], function () {
     });
 });
 
-gulp.task('deploy', function () {
+gulp.task('bundle', function () {
 
     browserifyTask({
         development: false,
         src: './client/app/main.js',
-        dest: './client/dist'
+        dest: './bundle/client'
     });
 
     cssTask({
         development: false,
         src: './client/styles/**/*.css',
-        dest: './client/dist'
+        dest: './bundle/client'
     });
 
 
-    gulp.src(['./client/build/img/**/*']).pipe(gulp.dest('./client/dist/img'));
-    gulp.src(['./client/build/js/**/*']).pipe(gulp.dest('./client/dist/js'));
+    gulp.src(['./package.json']).pipe(gulp.dest('./bundle'));
+    gulp.src(['./server/**/*']).pipe(gulp.dest('./bundle/server'));
+    gulp.src(['./client/build/css/**/*']).pipe(gulp.dest('./bundle/client/css'));
+    gulp.src(['./client/build/fonts/**/*']).pipe(gulp.dest('./bundle/client/fonts'));
+    gulp.src(['./client/build/img/**/*']).pipe(gulp.dest('./bundle/client/img'));
+    gulp.src(['./client/build/js/**/*']).pipe(gulp.dest('./bundle/client/js'));
 
-    startServer({
-        development: false,
-        path: "./server/server.js"
-    });
-});
-
-gulp.task('test', function () {
-    return gulp.src('./client/build/testrunner-phantomjs.html').pipe(jasminePhantomJs());
+    gulp.src('bundle/**/*').pipe(tar('bundle.tar')).pipe(gzip()).pipe(gulp.dest('.'));
 });

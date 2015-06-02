@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 var Rx = require('rx');
+var env = require('node-env-file');
 
 var express = require('express');
 var app = express();
@@ -7,8 +8,16 @@ var expressWs = require('express-ws')(app);
 
 var DataGenerator = require('./createData');
 
+process.env.PATH_TO_CLIENT = './client/build';
+process.env.PORT = 3000;
+
+env(process.cwd() + '/treadstone.cfg', {overwrite: true});
+
+console.log('PATH_TO_CLIENT = ' + process.env.PATH_TO_CLIENT);
+console.log('PORT = ' + process.env.PORT);
+
 // this is relative from the gulpfile.js i.e. from where the node server has been started from
-app.use(express.static('./client/build'));
+app.use(express.static(process.env.PATH_TO_CLIENT));
 
 app.get('/hello', function (req, res) {
     res.send('Hello World!');
@@ -29,7 +38,7 @@ app.ws('/dashboard', function (ws, req) {
     });
 });
 
-var server = app.listen(3000, function () {
+var server = app.listen(process.env.PORT, function () {
 
     var host = server.address().address;
     var port = server.address().port;

@@ -39,7 +39,7 @@ var Dashboard = React.createClass({
 
     componentDidMount: function () {
         var that = this;
-        var ws = new WebSocket('ws://localhost:3000/dashboard');
+        var ws = new WebSocket('ws://'+ window.location.host +'/dashboard');
         var open = Rx.Observable.fromEvent(ws, 'open');
         var messages = Rx.Observable.fromEvent(ws, 'message');
 
